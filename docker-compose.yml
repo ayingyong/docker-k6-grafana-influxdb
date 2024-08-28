@@ -1,4 +1,4 @@
-version: '3.4'
+version: '3.8'
 
 networks:
   k6:
@@ -7,8 +7,7 @@ networks:
 services:
   influxdb:
     image: influxdb:1.8
-#    entrypoint: /bin/sh
-#    user: root
+    platform: linux/amd64  # Specify platform for compatibility
     networks:
       - k6
       - grafana
@@ -19,8 +18,7 @@ services:
 
   grafana:
     image: grafana/grafana:8.5.21
-#    entrypoint: /bin/sh
-#    user: root
+    platform: linux/amd64  # Specify platform for compatibility
     networks:
       - grafana
     ports:
@@ -36,9 +34,8 @@ services:
       - ./grafana-datasource.yaml:/etc/grafana/provisioning/datasources/datasource.yaml
 
   k6:
-    image: loadimpact/k6:latest
-#    entrypoint: /bin/sh
-#    user: root
+    image: grafana/k6:latest  # Updated to official Grafana k6 image
+    platform: linux/amd64  # Specify platform for compatibility
     networks:
       - k6
     ports:
